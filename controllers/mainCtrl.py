@@ -2,14 +2,17 @@ import serial
 from controllers.usbController import usbController
 
 class Controller(object):
-    def __init__(self):
+    def __init__(self, model):
         print("main_ctrl: Init")
-        self._usbCtrl = usbController()
-        print(self._usbCtrl)
+        self._model = model
 
-    def usbConnect(self):
-        vid = 1155  # replace with the Vendor ID of the USB device
-        pid = 22336  # replace with the Product ID of the USB device
+        self._usbCtrl = usbController()
+
+    def usbConnect(self, vid, pid):
+        print("connecting usb")
+        print(pid, vid)
+        # vid = 1155  # replace with the Vendor ID of the USB device
+        # pid = 22336  # replace with the Product ID of the USB device
         if self._usbCtrl.serial:
             if self._usbCtrl.serial.isOpen():
                 print("USB Already Opened")
