@@ -1,9 +1,11 @@
 # GUI_Arm_Controller
 
-## python3
+### QT Creator for generate UI file ("newUI.ui")
 
-## install pyqt5 via pycharm
+### python3
 
-## install PyqtChart
+### install pyqt5 via pycharm
 
-## install pyserial 
+### install PyqtChart
+
+### install pyserial 
