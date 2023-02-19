@@ -12,8 +12,8 @@ from views.mainView import View
 class App(object):
     def __init__(self):
         self.model = Model()
-        self.controller = Controller()
-        self.view = View(self.model, self.controller)
+        self.controller = Controller(self.model)
+        self.view = View(self.controller, self.model)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
