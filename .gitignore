@@ -1,0 +1,15 @@
+**/__pycache__/
+ views/__pycache__/
+__pycache__/
+__pycache__
+views/__pycache__/robotCtrlUi.cpython-39.pyc
+controllers/__pycache__/
+controllers/__pycache__/
+model/__pycache__/
+views/__pycache__/
+util/__pycache__/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
