@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1039</width>
-    <height>729</height>
+    <width>1121</width>
+    <height>900</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -25,8 +25,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1041</width>
-      <height>691</height>
+      <width>1111</width>
+      <height>851</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -45,8 +45,8 @@
      <widget class="QGroupBox" name="groupBox">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>50</y>
+        <x>10</x>
+        <y>10</y>
         <width>241</width>
         <height>191</height>
        </rect>
@@ -148,10 +148,10 @@
      <widget class="QChartView" name="graphicsView">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>260</y>
-        <width>531</width>
-        <height>311</height>
+        <x>20</x>
+        <y>200</y>
+        <width>501</width>
+        <height>271</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -176,8 +176,8 @@
      <widget class="QGroupBox" name="groupBox_3">
       <property name="geometry">
        <rect>
-        <x>750</x>
-        <y>310</y>
+        <x>570</x>
+        <y>200</y>
         <width>241</width>
         <height>271</height>
        </rect>
@@ -504,8 +504,8 @@
      <widget class="QGroupBox" name="groupBox_2">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>50</y>
+        <x>260</x>
+        <y>10</y>
         <width>701</width>
         <height>191</height>
        </rect>
@@ -1003,8 +1003,60 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QLabel" name="imgLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>520</y>
+        <width>501</width>
+        <height>241</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>500</y>
+        <width>171</width>
+        <height>241</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>GroupBox</string>
+      </property>
+      <widget class="QPushButton" name="StopButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>110</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>STOP</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="DetectButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>60</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>DETECT</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
-    <widget class="QWidget" name="tab_3">
+    <widget class="QWidget" name="CVtab">
      <attribute name="title">
       <string>Main Tab</string>
      </attribute>
@@ -1024,7 +1076,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1039</width>
+     <width>1121</width>
      <height>26</height>
     </rect>
    </property>

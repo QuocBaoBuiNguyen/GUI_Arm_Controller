@@ -3,9 +3,9 @@ from controllers.usbController import usbController
 from util.dataType import arrayFloat
 
 class Controller(object):
-    def __init__(self, model):
+    def __init__(self):
         print("main_ctrl: Init")
-        self._model = model
+        # self._model = model
 
         self._usbCtrl = usbController()
 

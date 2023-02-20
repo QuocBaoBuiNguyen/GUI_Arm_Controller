@@ -9,11 +9,14 @@ from model.models import Model
 from controllers.mainCtrl import Controller
 from views.mainView import View
 
+
 class App(object):
     def __init__(self):
-        self.model = Model()
-        self.controller = Controller(self.model)
-        self.view = View(self.controller, self.model)
+        #self.model = Model()
+        # self.controller = Controller(self.model)
+        # self.view = View(self.controller, self.model)
+        self.controller = Controller()
+        self.view = View(self.controller)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
