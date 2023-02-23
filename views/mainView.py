@@ -58,10 +58,14 @@ class View(QMainWindow):
         # Define a list of colors for visualization
         self.COLORS = np.random.randint(0, 255, size=(len(self.classes), 3), dtype=np.uint8)
 
+        self.timer = QTimer()
+        self.timer.timeout.connect(lambda: self.start_detect())
+
         # self.connectBtn.clicked.connect(lambda: self._controller.usbConnect(int(self._ui.vidTxt.toPlainText()),
         #                                                                     int(self._ui.pidTxt.toPlainText())))
         self.connectBtn.clicked.connect(lambda: self._controller.usbConnect(1155, 22336))
-        self.DetectButton.clicked.connect(self.detect_object)
+        self.DetectButton.clicked.connect(lambda: self.startTimer())
+        self.StopButton.clicked.connect(lambda: self.endTimer())
 
         self._ui.movCmdBtn.clicked.connect(self.getPosistion)
 
@@ -182,17 +186,21 @@ class View(QMainWindow):
         # define a video capture object
         # vid = cv2.VideoCapture(0)
 
-    def detect_object(self):
+    def startTimer(self):
+        self.timer.start(1000)
+
+    def endTimer(self):
+        self.timer.stop()
+
+    def start_detect(self):
 
         interpreter = tf.lite.Interpreter(model_path='EfficientDet2_Flags.tflite')
         interpreter.allocate_tensors()
 
-        INPUT_IMAGE_URL = "E:/HCMUT/FinalProject/FinalProject/webcamphoto/webcam.jpg"
+        INPUT_IMAGE_URL = "E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model\webcam.jpg"
         DETECTION_THRESHOLD = 0.5
 
-    #while (True):
-
-        os.chdir('E:/HCMUT/FinalProject/FinalProject/webcamphoto')
+        os.chdir('E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model')
         self.photo_capture()
 
         # INPUT_IMAGE_URL = "E:/HCMUT/FinalProject/FinalProject/webcamphoto/webcam.jpg"
@@ -217,3 +225,5 @@ class View(QMainWindow):
 
         self.imgLabel.setPixmap(QPixmap('result.jpg'))
         self.imgLabel.setScaledContents(True)
+
+
