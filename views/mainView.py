@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QGraphicsWidget
 from PyQt5.QtChart   import QChart, QLineSeries
+from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from views.robotCtrlUi import robotCtrlUi
@@ -28,10 +29,19 @@ class View(QMainWindow):
         self._ui.movHomeBtn.clicked.connect(lambda: self._controller.moveHome())
         self._ui.movJointBtn.clicked.connect(self.getJointAngle)
 
+        self.DetectButton.clicked.connect(lambda: self._controller.startDetectionTimer())
+        self.StopButton.clicked.connect(lambda: self._controller.endDetectionTimer())
+
         # listen for model event signals
         # connect the method to update the ui to the slots of the model
         # if model sends/emits a signal the ui gets notified
         self._model.usbInfoChanged.connect(self.onUsbInfoChangeEvent)
+        self._model.cameraDetectImgChanged.connect(self.onCameraImgDectectChangeEvent)
+
+    def onCameraImgDectectChangeEvent(self, imgPath):
+        print(imgPath)
+        self.imgLabel.setPixmap(QPixmap(imgPath))
+        self.imgLabel.setScaledContents(True)
 
     def onUsbInfoChangeEvent(self, usbConnStatus):
         if usbConnStatus:

@@ -1,5 +1,6 @@
 import array as arr
 from controllers.usbController import UsbController
+from controllers.cameraController import CameraController
 from util.dataTypes import arrayFloat
 
 class Controller(object):
@@ -7,6 +8,16 @@ class Controller(object):
         print("main_ctrl: Init")
         self._model = model
         self._usbCtrl = UsbController(self.receiveUsbEventHandler)
+        self._cameraCtrl = CameraController(self.photoCaptureEventCb)
+
+    def photoCaptureEventCb(self, imagePath):
+        self._model.cameraCurrImg = imagePath
+
+    def startDetectionTimer(self):
+        self._cameraCtrl.startTimer()
+
+    def endDetectionTimer(self):
+        self._cameraCtrl.endTimer()
 
     def receiveUsbEventHandler(self, serialByte):
         frameList = list(serialByte)
