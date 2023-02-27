@@ -9,14 +9,18 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from views.robotCtrlUi import robotCtrlUi
 
+import os
+from PyQt5 import uic
+
 #class View(QWidget):
 class View(QMainWindow):
     def __init__(self,  controller, model):
         print("main_view: Init")
         super(View, self).__init__()
 
-        self._ui = loadUi("resources/mainwindow.ui", self)
-
+        ui_path = os.path.dirname(os.path.abspath(__file__))
+        self._ui = uic.loadUi(os.path.join("D:/NCKH/AppQt/Project/ArmGUI/", "resources/mainwindow.ui"), self)
+        #self._ui = loadUi("resources/mainwindow.ui", self)
         self._controller = controller
         self._model = model
         self._robotCtrlUi = robotCtrlUi(self._ui)
@@ -24,13 +28,13 @@ class View(QMainWindow):
         # connect ui-widget to controller
         # if ui changes, it sends a signal to an slot on which we connect a controller class.
         # therefore we can recive the signal in the controller
-        self.connectBtn.clicked.connect(self.getUsbInfoFromGUI)
+        self._ui.connectBtn.clicked.connect(self.getUsbInfoFromGUI)
         self._ui.movPosBtn.clicked.connect(self.getPosistion)
         self._ui.movHomeBtn.clicked.connect(lambda: self._controller.moveHome())
         self._ui.movJointBtn.clicked.connect(self.getJointAngle)
 
-        self.DetectButton.clicked.connect(lambda: self._controller.startDetectionTimer())
-        self.StopButton.clicked.connect(lambda: self._controller.endDetectionTimer())
+        self._ui.DetectButton.clicked.connect(lambda: self._controller.startDetectionTimer())
+        self._ui.StopButton.clicked.connect(lambda: self._controller.endDetectionTimer())
 
         # listen for model event signals
         # connect the method to update the ui to the slots of the model

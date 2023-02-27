@@ -16,7 +16,7 @@ class robotCtrlUi():
         jointChart.addSeries(series)
         jointChart.setTitle('Example')
         jointChart.createDefaultAxes()
-        self.ui.graphicsView.setChart(jointChart)
+        #self.ui.graphicsView.setChart(jointChart)
 
     def getPID(self):
         return self.ui.pidTxt.toPlainText()

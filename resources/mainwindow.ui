@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1039</width>
-    <height>729</height>
+    <width>1436</width>
+    <height>899</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -25,8 +25,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1041</width>
-      <height>691</height>
+      <width>1511</width>
+      <height>991</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -1008,6 +1008,45 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QLabel" name="imgLabel">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>580</y>
+        <width>521</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="DetectButton">
+      <property name="geometry">
+       <rect>
+        <x>790</x>
+        <y>620</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Detect Button</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="StopButton">
+      <property name="geometry">
+       <rect>
+        <x>790</x>
+        <y>690</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Stop Button</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -1029,7 +1068,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1039</width>
+     <width>1436</width>
      <height>26</height>
     </rect>
    </property>

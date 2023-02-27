@@ -19,11 +19,13 @@ logging.set_verbosity(logging.ERROR)
 spec = model_spec.get('efficientdet_lite2')
 
 import cv2
+import time
 from PIL import Image
 
 class CameraController(object):
     def __init__(self, f_cb):
-        os.chdir('E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model')
+        start_time = time.time()
+        os.chdir('D:/NCKH/AppQt/Project/ArmGUI/model')
         interpreter = tf.lite.Interpreter(model_path="EfficientDet2_Flags.tflite")
         interpreter.allocate_tensors()
         input_details = interpreter.get_input_details()
@@ -48,6 +50,7 @@ class CameraController(object):
         original_image = img
         resized_img = tf.image.resize(img, input_size)
         resized_img = resized_img[tf.newaxis, :]
+        resized_img = tf.cast(resized_img, dtype=tf.uint8)
         return resized_img, original_image
 
     def set_input_tensor(self, interpreter, image):
@@ -65,14 +68,23 @@ class CameraController(object):
     def detect_objects(self, interpreter, image, threshold):
         """Returns a list of detection results, each a dictionary of object info."""
         # Feed the input image to the model
-        self.set_input_tensor(interpreter, image)
-        interpreter.invoke()
+        # self.set_input_tensor(interpreter, image)
+        # interpreter.invoke()
 
-        # Get all outputs from the model
-        scores = self.get_output_tensor(interpreter, 0)
-        boxes = self.get_output_tensor(interpreter, 1)
-        count = int(self.get_output_tensor(interpreter, 2))
-        classes = self.get_output_tensor(interpreter, 3)
+        signature_fn = interpreter.get_signature_runner()
+
+        output = signature_fn(images = image)
+
+        count = int(np.squeeze(output['output_0']))
+        scores = np.squeeze(output['output_1'])
+        classes = np.squeeze(output['output_2'])
+        boxes = np.squeeze(output['output_3'])
+
+        # # Get all outputs from the model
+        # scores = self.get_output_tensor(interpreter, 0)
+        # boxes = self.get_output_tensor(interpreter, 1)
+        # count = int(self.get_output_tensor(interpreter, 2))
+        # classes = self.get_output_tensor(interpreter, 3)
 
         results = []
         for i in range(count):
@@ -139,8 +151,8 @@ class CameraController(object):
     def photo_capture(self):
         vid = cv2.VideoCapture(1)  # 0 for laptop webcam, 1 for logi webcam
         ret, frame = vid.read()
-        print(ret)
-        print(frame)
+        #print(ret)
+        #print(frame)
         cv2.imwrite('webcam.jpg', frame)
         # vid.release()
 
@@ -150,7 +162,7 @@ class CameraController(object):
         # vid = cv2.VideoCapture(0)
 
     def startTimer(self):
-        self.timer.start(1000)
+        self.timer.start(10)
 
     def endTimer(self):
         self.timer.stop()
@@ -160,10 +172,10 @@ class CameraController(object):
         interpreter = tf.lite.Interpreter(model_path='EfficientDet2_Flags.tflite')
         interpreter.allocate_tensors()
 
-        INPUT_IMAGE_URL = "E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model\webcam.jpg"
+        INPUT_IMAGE_URL = "D:/NCKH/AppQt/Project/ArmGUI/model/webcam.jpg"
         DETECTION_THRESHOLD = 0.5
 
-        os.chdir('E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model')
+        os.chdir('D:/NCKH/AppQt/Project/ArmGUI/model')
         self.photo_capture()
 
         # INPUT_IMAGE_URL = "E:/HCMUT/FinalProject/FinalProject/webcamphoto/webcam.jpg"
@@ -185,7 +197,7 @@ class CameraController(object):
         # cv2.imshow('', imgresized)
         im = cv2.cvtColor(detection_result_image, cv2.COLOR_RGB2BGR)
         cv2.imwrite('result.jpg', im)
-
+        print()
         self.photo_capture_callback('result.jpg')
 
 
