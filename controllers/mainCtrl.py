@@ -1,12 +1,24 @@
 import array as arr
 from controllers.usbController import UsbController
-from util.dataType import arrayFloat
+from util.dataTypes import arrayFloat
 
 class Controller(object):
     def __init__(self, model):
         print("main_ctrl: Init")
         self._model = model
-        self._usbCtrl = UsbController()
+        self._usbCtrl = UsbController(self.receiveUsbEventHandler)
+
+    def receiveUsbEventHandler(self, serialByte):
+        frameList = list(serialByte)
+        print("Main Controller: Receive ", frameList)
+
+        if frameList[0] == self._usbCtrl.STX and frameList[21] == self._usbCtrl.ETX:
+            if frameList[20] == self._usbCtrl.ACK:
+                cmd = ''.join(map(str, ''.join(chr(i) for i in frameList[1:5])))
+                print("Main Controller: Receive cmd:", cmd)
+                if cmd == 'RCPG':
+                    print("hehehe")
+                    # Run finish process
 
     def usbConnect(self, vid, pid):
         # vid = 1155  # replace with the Vendor ID of the USB device
@@ -25,7 +37,7 @@ class Controller(object):
             print('USB connect successfully') if usbStatus else print('USB connect failed')
 
     def moveHome(self):
-        frame = self._usbCtrl.makeFrame("GJOI", [0, 0, 0], [0, 0, 0])
+        frame = self._usbCtrl.makeFrame("HOME", [0, 0, 0], [0, 0, 0])
         print("MOVE HOME");
         print("frame", bytearray(frame))
         self._usbCtrl.sendUsb(bytearray(frame))
@@ -37,6 +49,6 @@ class Controller(object):
 
     def movePos(self, x, y, z):
         frame = self._usbCtrl.makeFrame("GPOS", [0, 0, 0], [x, y, z])
-        print("move to posistion", x, y, z)
+        # print("move to posistion", x, y, z)
         print("frame", bytearray(frame))
         self._usbCtrl.sendUsb(bytearray(frame))

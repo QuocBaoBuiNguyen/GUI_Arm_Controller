@@ -25,6 +25,7 @@ class View(QMainWindow):
         # therefore we can recive the signal in the controller
         self.connectBtn.clicked.connect(self.getUsbInfoFromGUI)
         self._ui.movPosBtn.clicked.connect(self.getPosistion)
+        self._ui.movHomeBtn.clicked.connect(lambda: self._controller.moveHome())
         self._ui.movJointBtn.clicked.connect(self.getJointAngle)
 
         # listen for model event signals
