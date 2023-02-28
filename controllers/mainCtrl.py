@@ -14,10 +14,10 @@ class Controller(object):
         self._model.cameraCurrImg = imagePath
 
     def startDetectionTimer(self):
-        self._cameraCtrl.startTimer()
+        self._cameraCtrl.start_capture_video()
 
     def endDetectionTimer(self):
-        self._cameraCtrl.endTimer()
+        self._cameraCtrl.stop_capture_video()
 
     def receiveUsbEventHandler(self, serialByte):
         frameList = list(serialByte)

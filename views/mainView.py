@@ -19,7 +19,7 @@ class View(QMainWindow):
         super(View, self).__init__()
 
         ui_path = os.path.dirname(os.path.abspath(__file__))
-        self._ui = uic.loadUi(os.path.join("D:/NCKH/AppQt/Project/ArmGUI/", "resources/mainwindow.ui"), self)
+        self._ui = uic.loadUi(os.path.join("E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller", "resources/mainwindow.ui"), self)
         #self._ui = loadUi("resources/mainwindow.ui", self)
         self._controller = controller
         self._model = model
