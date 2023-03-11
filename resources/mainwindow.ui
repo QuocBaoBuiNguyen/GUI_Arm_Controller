@@ -36,7 +36,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="RobotCtrlTab">
      <attribute name="title">
@@ -1008,50 +1008,76 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="imgLabel">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>580</y>
-        <width>521</width>
-        <height>221</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="DetectButton">
-      <property name="geometry">
-       <rect>
-        <x>790</x>
-        <y>620</y>
-        <width>93</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Detect Button</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="StopButton">
-      <property name="geometry">
-       <rect>
-        <x>790</x>
-        <y>690</y>
-        <width>93</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Stop Button</string>
-      </property>
-     </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>Main Tab</string>
+      <string>Camera Tab</string>
      </attribute>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="geometry">
+       <rect>
+        <x>810</x>
+        <y>150</y>
+        <width>151</width>
+        <height>161</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Camera Button</string>
+      </property>
+      <widget class="QPushButton" name="DetectButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>40</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Detect Button</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="StopButton">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>90</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Stop Button</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>10</y>
+        <width>731</width>
+        <height>431</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Video</string>
+      </property>
+      <widget class="QLabel" name="imgLabel">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>691</width>
+         <height>401</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </widget>
   </widget>

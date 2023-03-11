@@ -14,6 +14,7 @@ from PyQt5.QtGui import QImage, QPixmap
 
 import numpy as np
 import os
+import math
 
 import cv2
 from PIL import Image
@@ -99,8 +100,12 @@ class live_stream(QThread):
         :return: Trained Pytorch model.
         """
         # model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
-        model = torch.hub.load('ultralytics/yolov5', 'custom', path='E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model\YOLOv5_FlagsDetection')
+        #model = torch.hub.load('ultralytics/yolov5', 'custom', path='E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model\YOLOv5_FlagsDetection')
         # model = torch.hub.load('yolov5-master', 'custom', path='yolov5s.pt', source='local')
+        # model = torch.hub.load('ultralytics/yolov5', 'custom',
+        #                        path='E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model\YOLOv5_DrinksLogos_Segment')
+        model = torch.hub.load('ultralytics/yolov5', 'custom',
+                               path='E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model\YOLOv5_DrinksLogosDetection')
         return model
 
     def score_frame(self, frame):
@@ -124,33 +129,112 @@ class live_stream(QThread):
         return self.classes[int(x)]
 
     def plot_boxes(self, results, frame):
+
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+        hue, saturation, value = cv2.split(hsv)
+        blurred_sat = cv2.GaussianBlur(saturation, (5, 5), 0)
+        edges = cv2.Canny(blurred_sat, 45, 100)
+
+        kernel = np.ones((3, 3), np.uint8)
+        dilate = cv2.dilate(edges, kernel, iterations=2)
+        erode = cv2.erode(dilate, kernel, iterations=2)
+
+        contours, hierarchy = cv2.findContours(erode, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]
+
+        for contour in contours:
+
+            area = cv2.contourArea(contour)
+            if area >= 6000:
+                rect = cv2.minAreaRect(contour)
+                box = cv2.boxPoints(rect)
+                box = np.int0(box)
+
+                print(box)
+
+                labels, cord = results
+                n = len(labels)
+                x_shape, y_shape = frame.shape[1], frame.shape[0]
+                for i in range(n):
+                    row = cord[i]
+                    print("ddd", round(cord[i][4], 2))
+                    if row[4] >= 0.1:
+                        x1, y1, x2, y2 = int(row[0] * x_shape), int(row[1] * y_shape), int(row[2] * x_shape), int(
+                            row[3] * y_shape)
+                        print("x1 = ", x1,", y1 = ", y1,", x2 = ", x2, ", y2 = ", y2)
+                        print(box[3][0], box[3][1], box[1][0], box[1][1])
+                        if box[3][0] >= x1 and box[3][1] >= y1 and box[1][0] <= x2 and box[1][1] <= y2:
+                            cv2.drawContours(frame, [box], 0, (0, 255, 0), 2)
+                            bgr = (0, 250, 0)
+                            cv2.putText(frame, self.class_to_label(labels[i]) + " " + str(round(row[4], 2)), (box[3][0], box[3][1]),
+                                                             cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
+                            radius = 2
+                            #center = (int(x1 + (x2 - x1) // 2), int(y1 + (y2 - y1) // 2))
+                            center = (int(box[3][0] + (box[1][0] - box[3][0]) // 2), int(box[3][1] + (box[1][1] - box[3][1]) // 2))
+                            print(self.class_to_label(labels[i]), center)
+                            cv2.circle(frame, center, radius, (250, 0, 0), 2)
+                            cv2.putText(frame, str(center[0]) + " " + str(center[1]), center,
+                                        cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
+
+        print("end loop")
+        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        # hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        #
+        # hue, saturation, value = cv2.split(hsv)
+        # blurred_sat = cv2.GaussianBlur(saturation, (5, 5), 0)
+        # edges = cv2.Canny(blurred_sat, 45, 100)
+        #
+        # kernel = np.ones((3, 3), np.uint8)
+        # dilate = cv2.dilate(edges, kernel, iterations=2)
+        # erode = cv2.erode(dilate, kernel, iterations=2)
+        #
+        # contours, hierarchy = cv2.findContours(erode, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        #
+        # contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]
+        #
+        # for contour in contours:
+        #
+        #     area = cv2.contourArea(contour)
+        #     if area >= 6000:
+        #         rect = cv2.minAreaRect(contour)
+        #         box = cv2.boxPoints(rect)
+        #         box = np.int0(box)
+        #         cv2.drawContours(frame, [box], 0, (0, 255, 0), 2)
         """
         Takes a frame and its results as input, and plots the bounding boxes and label on to the frame.
         :param results: contains labels and coordinates predicted by model on the given frame.
         :param frame: Frame which has been scored.
         :return: Frame with bounding boxes and labels ploted on it.
         """
-        labels, cord = results
-        n = len(labels)
-        x_shape, y_shape = frame.shape[1], frame.shape[0]
-        for i in range(n):
-            row = cord[i]
-            print("ddd", round(cord[i][4], 2))
-            if row[4] >= 0.1:
-                x1, y1, x2, y2 = int(row[0] * x_shape), int(row[1] * y_shape), int(row[2] * x_shape), int(
-                    row[3] * y_shape)
-                bgr = (0, 255, 0)
-                cv2.rectangle(frame, (x1, y1), (x2, y2), bgr, 2)
-                cv2.putText(frame, self.class_to_label(labels[i]) + " " + str(round(row[4], 2)), (x1, y1),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
-
+        # labels, cord = results
+        # n = len(labels)
+        # x_shape, y_shape = frame.shape[1], frame.shape[0]
+        # for i in range(n):
+        #     row = cord[i]
+        #     print("ddd", round(cord[i][4], 2))
+        #     if row[4] >= 0.1:
+        #         x1, y1, x2, y2 = int(row[0] * x_shape), int(row[1] * y_shape), int(row[2] * x_shape), int(
+        #             row[3] * y_shape)
+        #         print(x1, y1, x2, y2)
+        #
+        #         bgr = (0, 250, 0)
+        #         cv2.rectangle(frame, (x1, y1), (x2, y2), bgr, 2)
+        #         radius = 2
+        #         center = (int(x1 + (x2 - x1) // 2), int(y1 + (y2 - y1) // 2))
+        #         print(self.class_to_label(labels[i]), center)
+        #         cv2.circle(frame, center, radius, bgr, 2)
+        #         cv2.putText(frame, self.class_to_label(labels[i]) + " " + str(round(row[4], 2)), (x1, y1),
+        #                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
         return frame
 
     def run_program(self):
         """
         This function is called when class is executed, it runs the loop to read the video frame by frame,
         and write the output into a new file.
-        :return: void
+        :return: voidv
         """
         self.player = self.get_video_from_url()
         assert self.player.isOpened()
