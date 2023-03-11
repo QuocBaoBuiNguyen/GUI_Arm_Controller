@@ -180,29 +180,6 @@ class live_stream(QThread):
                                         cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
 
         print("end loop")
-        # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        # hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-        #
-        # hue, saturation, value = cv2.split(hsv)
-        # blurred_sat = cv2.GaussianBlur(saturation, (5, 5), 0)
-        # edges = cv2.Canny(blurred_sat, 45, 100)
-        #
-        # kernel = np.ones((3, 3), np.uint8)
-        # dilate = cv2.dilate(edges, kernel, iterations=2)
-        # erode = cv2.erode(dilate, kernel, iterations=2)
-        #
-        # contours, hierarchy = cv2.findContours(erode, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        #
-        # contours = sorted(contours, key=cv2.contourArea, reverse=True)[:10]
-        #
-        # for contour in contours:
-        #
-        #     area = cv2.contourArea(contour)
-        #     if area >= 6000:
-        #         rect = cv2.minAreaRect(contour)
-        #         box = cv2.boxPoints(rect)
-        #         box = np.int0(box)
-        #         cv2.drawContours(frame, [box], 0, (0, 255, 0), 2)
         """
         Takes a frame and its results as input, and plots the bounding boxes and label on to the frame.
         :param results: contains labels and coordinates predicted by model on the given frame.

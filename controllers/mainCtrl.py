@@ -2,6 +2,7 @@ import array as arr
 from controllers.usbController import UsbController
 from controllers.cameraController import CameraController
 from util.dataTypes import arrayFloat
+import struct
 
 class Controller(object):
     def __init__(self, model):
@@ -28,8 +29,22 @@ class Controller(object):
                 cmd = ''.join(map(str, ''.join(chr(i) for i in frameList[1:5])))
                 print("Main Controller: Receive cmd:", cmd)
                 if cmd == 'RCPG':
-                    print("hehehe")
                     # Run finish process
+                    print('RCPG')
+                elif cmd == 'SPOS':
+                    joint_angle1 = self.convert_from_byte(frameList[8:12])
+                    joint_angle2 = self.convert_from_byte(frameList[12:16])
+                    joint_angle3 = self.convert_from_byte(frameList[16:20])
+                    print(joint_angle1, joint_angle2, joint_angle3)
+
+    def convert_from_byte(self, data):
+        results = []
+        while data:
+            part = data[:4]
+            value = struct.unpack('<f', bytes(part))
+            results.append(value[0])
+            data = data[4:]
+        return results
 
     def usbConnect(self, vid, pid):
         # vid = 1155  # replace with the Vendor ID of the USB device
@@ -61,5 +76,7 @@ class Controller(object):
     def movePos(self, x, y, z):
         frame = self._usbCtrl.makeFrame("GPOS", [0, 0, 0], [x, y, z])
         # print("move to posistion", x, y, z)
-        print("frame", bytearray(frame))
+        for i in frame:
+            print(hex(i))
+        # print("frame", ( )
         self._usbCtrl.sendUsb(bytearray(frame))
