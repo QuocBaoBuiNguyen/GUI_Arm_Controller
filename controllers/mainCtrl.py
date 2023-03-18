@@ -1,6 +1,7 @@
 import array as arr
 from controllers.usbController import UsbController
 from controllers.cameraController import CameraController
+from controllers.sqlController import sqlController
 from util.dataTypes import arrayFloat
 import struct
 
@@ -10,6 +11,20 @@ class Controller(object):
         self._model = model
         self._usbCtrl = UsbController(self.receiveUsbEventHandler)
         self._cameraCtrl = CameraController(self.photoCaptureEventCb)
+        self._sqlCtrl = sqlController
+
+    def loadSQLData(self):
+        print("loadSQLData Called")
+        self.result = self._sqlCtrl.select_all(self)
+        #print(self.result)
+        return self.result
+
+    def insertSQLData(self, Id, Name, Price, DateandTime):
+        self._sqlCtrl.insert_data(self, Id, Name, Price, DateandTime)
+
+    def deleteSQLData(self):
+        print("deleteSQLData called")
+        self._sqlCtrl.delete_data(self)
 
     def photoCaptureEventCb(self, imagePath):
         self._model.cameraCurrImg = imagePath

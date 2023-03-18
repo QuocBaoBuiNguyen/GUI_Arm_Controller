@@ -98,6 +98,9 @@
          </property>
          <item row="3" column="1">
           <widget class="QPushButton" name="connectBtn">
+           <property name="styleSheet">
+            <string notr="true">background-color: yellow</string>
+           </property>
            <property name="text">
             <string>Connect</string>
            </property>
@@ -534,6 +537,9 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: yellow</string>
+         </property>
          <property name="text">
           <string>Move Pos</string>
          </property>
@@ -945,6 +951,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="modeCtrlBtn">
+           <property name="styleSheet">
+            <string notr="true">background-color: yellow</string>
+           </property>
            <property name="text">
             <string>Update Mode</string>
            </property>
@@ -952,6 +961,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="movHomeBtn">
+           <property name="styleSheet">
+            <string notr="true">background-color: yellow</string>
+           </property>
            <property name="text">
             <string>Move Home</string>
            </property>
@@ -972,6 +984,9 @@
            <width>100</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: yellow</string>
          </property>
          <property name="text">
           <string>Move Joint</string>
@@ -1034,6 +1049,9 @@
          <height>361</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: white</string>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -1060,6 +1078,9 @@
          <height>28</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: yellow</string>
+       </property>
        <property name="text">
         <string>Stop Button</string>
        </property>
@@ -1073,8 +1094,133 @@
          <height>28</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: yellow</string>
+       </property>
        <property name="text">
         <string>Detect Button</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QTableWidget" name="SQLtableWidget">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>470</y>
+        <width>421</width>
+        <height>351</height>
+       </rect>
+      </property>
+      <property name="rowCount">
+       <number>10</number>
+      </property>
+      <property name="columnCount">
+       <number>4</number>
+      </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="horizontalHeaderCascadingSectionResizes">
+       <bool>false</bool>
+      </attribute>
+      <attribute name="horizontalHeaderDefaultSectionSize">
+       <number>125</number>
+      </attribute>
+      <attribute name="horizontalHeaderHighlightSections">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <row/>
+      <column/>
+      <column/>
+      <column/>
+      <column/>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_6">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>500</y>
+        <width>141</width>
+        <height>241</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Data Button</string>
+      </property>
+      <widget class="QPushButton" name="SQLSaveBtn">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: yellow</string>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="SQLBtn">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: yellow</string>
+       </property>
+       <property name="text">
+        <string>Show</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pickupBtn">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>130</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: yellow</string>
+       </property>
+       <property name="text">
+        <string>Picked up</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="DeleteDataBtn">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>180</y>
+         <width>93</width>
+         <height>28</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: yellow</string>
+       </property>
+       <property name="text">
+        <string>Delete Data</string>
        </property>
       </widget>
      </widget>
