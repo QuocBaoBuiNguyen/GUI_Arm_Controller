@@ -4,6 +4,7 @@ class Model(QObject):
 
     usbInfoChanged = pyqtSignal(bool)
     cameraDetectImgChanged = pyqtSignal(object)
+    motorCurrentGraphChanged = pyqtSignal(object)
 
     def __init__(self):
         super(Model, self).__init__()
@@ -24,6 +25,17 @@ class Model(QObject):
     def cameraCurrImg(self, imgPath):
         self._cameraCurrImg = imgPath
         self.cameraDetectImgChanged.emit(self._cameraCurrImg)
+
+    @property
+    def motorGraphCurr(self):
+        print("NOT USE")
+#        return self._cameraCurrImg
+
+    @motorGraphCurr.setter
+    def motorGraphCurr(self, value):
+        self._graphCurrValue = value
+        print(value)
+        self.motorCurrentGraphChanged.emit(self._graphCurrValue)
 
 
 

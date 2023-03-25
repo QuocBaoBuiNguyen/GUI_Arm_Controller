@@ -1,6 +1,6 @@
 import array as arr
 from controllers.usbController import UsbController
-# from controllers.cameraController import CameraController
+from controllers.cameraController import CameraController
 from util.dataTypes import arrayFloat
 import struct
 
@@ -9,16 +9,16 @@ class Controller(object):
         print("main_ctrl: Init")
         self._model = model
         self._usbCtrl = UsbController(self.receiveUsbEventHandler)
-        #self._cameraCtrl = CameraController(self.photoCaptureEventCb)
+        self._cameraCtrl = CameraController(self.photoCaptureEventCb)
 
     def photoCaptureEventCb(self, imagePath):
         self._model.cameraCurrImg = imagePath
 
     def startDetectionTimer(self):
-        self._cameraCtrl.startTimer()
+        self._cameraCtrl.start_capture_video()
 
     def endDetectionTimer(self):
-        self._cameraCtrl.endTimer()
+        self._cameraCtrl.stop_capture_video()
 
     def receiveUsbEventHandler(self, serialByte):
         frameList = list(serialByte)
@@ -35,7 +35,7 @@ class Controller(object):
                     joint_angle1 = self.convert_from_byte(frameList[8:12])
                     joint_angle2 = self.convert_from_byte(frameList[12:16])
                     joint_angle3 = self.convert_from_byte(frameList[16:20])
-                    print(joint_angle1, joint_angle2, joint_angle3 )
+                    self._model.motorGraphCurr = [joint_angle1, joint_angle2, joint_angle3]
 
     def convert_from_byte(self, data):
         results = []
@@ -63,20 +63,19 @@ class Controller(object):
             print('USB connect successfully') if usbStatus else print('USB connect failed')
 
     def moveHome(self):
-        frame = self._usbCtrl.makeFrame("HOME", [0, 0, 0], [0, 0, 0])
+        frame = self._usbCtrl.makeFrame("HOME", "AUT", [0, 0, 0])
         print("MOVE HOME");
         print("frame", bytearray(frame))
         self._usbCtrl.sendUsb(bytearray(frame))
 
     def moveJoint(self, joint1Deg, joint2Deg, joint3Deg):
-        frame = self._usbCtrl.makeFrame("GJOI", [0, 0, 0], [joint1Deg, joint2Deg, joint3Deg])
+        frame = self._usbCtrl.makeFrame("GJOI", "MAN", [joint1Deg, joint2Deg, joint3Deg])
         print("frame", bytearray(frame))
         self._usbCtrl.sendUsb(bytearray(frame))
 
     def movePos(self, x, y, z):
-        frame = self._usbCtrl.makeFrame("GPOS", [0, 0, 0], [x, y, z])
+        frame = self._usbCtrl.makeFrame("GPOS", "AUT", [x, y, z])
         # print("move to posistion", x, y, z)
-        for i in frame:
-            print(hex(i))
         # print("frame", ( )
+        self._model.motorGraphCurr = [1, 2, 3]
         self._usbCtrl.sendUsb(bytearray(frame))

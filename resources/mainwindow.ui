@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1436</width>
-    <height>899</height>
+    <width>1135</width>
+    <height>717</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -24,9 +24,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
-      <width>1511</width>
-      <height>991</height>
+      <y>10</y>
+      <width>1131</width>
+      <height>651</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -145,7 +145,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QChartView" name="graphicsView">
+     <widget class="PlotWidget" name="graphicsView">
       <property name="geometry">
        <rect>
         <x>210</x>
@@ -177,7 +177,7 @@
       <property name="geometry">
        <rect>
         <x>750</x>
-        <y>310</y>
+        <y>300</y>
         <width>241</width>
         <height>271</height>
        </rect>
@@ -1008,11 +1008,81 @@
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>270</y>
+        <width>91</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_11">
+       <item>
+        <widget class="QLabel" name="motor1_lbl">
+         <property name="font">
+          <font>
+           <family>Miriam Fixed</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>MOTOR1</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="motor2_lbl">
+         <property name="font">
+          <font>
+           <family>Miriam Fixed</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>MOTOR2</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="moto3_lbl">
+         <property name="font">
+          <font>
+           <family>Miriam Fixed</family>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>MOTOR3</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <zorder>groupBox</zorder>
+     <zorder>graphicsView</zorder>
+     <zorder>groupBox_3</zorder>
+     <zorder>groupBox_2</zorder>
+     <zorder>robotImg</zorder>
+     <zorder>groupBox_4</zorder>
+     <zorder>groupBox_4</zorder>
+     <zorder>groupBox_4</zorder>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Main Tab</string>
+     </attribute>
      <widget class="QLabel" name="imgLabel">
       <property name="geometry">
        <rect>
-        <x>210</x>
-        <y>580</y>
+        <x>30</x>
+        <y>50</y>
         <width>521</width>
         <height>221</height>
        </rect>
@@ -1024,8 +1094,8 @@
      <widget class="QPushButton" name="DetectButton">
       <property name="geometry">
        <rect>
-        <x>790</x>
-        <y>620</y>
+        <x>680</x>
+        <y>90</y>
         <width>93</width>
         <height>28</height>
        </rect>
@@ -1037,8 +1107,8 @@
      <widget class="QPushButton" name="StopButton">
       <property name="geometry">
        <rect>
-        <x>790</x>
-        <y>690</y>
+        <x>680</x>
+        <y>160</y>
         <width>93</width>
         <height>28</height>
        </rect>
@@ -1047,11 +1117,6 @@
        <string>Stop Button</string>
       </property>
      </widget>
-    </widget>
-    <widget class="QWidget" name="tab_3">
-     <attribute name="title">
-      <string>Main Tab</string>
-     </attribute>
     </widget>
    </widget>
   </widget>
@@ -1068,7 +1133,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1436</width>
+     <width>1135</width>
      <height>26</height>
     </rect>
    </property>
@@ -1077,9 +1142,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QChartView</class>
+   <class>PlotWidget</class>
    <extends>QGraphicsView</extends>
-   <header>PyQt5.QtChart</header>
+   <header location="global">pyqtgraph</header>
   </customwidget>
  </customwidgets>
  <resources/>

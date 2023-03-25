@@ -8,6 +8,8 @@ from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from views.robotCtrlUi import robotCtrlUi
+# from views.robotCtrlUi import ScrollingTimestampPlot
+
 
 import os
 from PyQt5 import uic
@@ -25,6 +27,11 @@ class View(QMainWindow):
         self._model = model
         self._robotCtrlUi = robotCtrlUi(self._ui)
 
+        # scrolling_timestamp_plot_widget = ScrollingTimestampPlot()
+        #
+        #
+        # self.addLayout(scrolling_timestamp_plot_widget.get_scrolling_timestamp_plot_layout(), 0, 0)
+
         # connect ui-widget to controller
         # if ui changes, it sends a signal to an slot on which we connect a controller class.
         # therefore we can recive the signal in the controller
@@ -41,6 +48,10 @@ class View(QMainWindow):
         # if model sends/emits a signal the ui gets notified
         self._model.usbInfoChanged.connect(self.onUsbInfoChangeEvent)
         self._model.cameraDetectImgChanged.connect(self.onCameraImgDectectChangeEvent)
+        self._model.motorCurrentGraphChanged.connect(self.onMotorCurrentGraphChangeEvent)
+
+    def onMotorCurrentGraphChangeEvent(self, value):
+        self._robotCtrlUi.uiUpdateGraph(value)
 
     def onCameraImgDectectChangeEvent(self, imgPath):
         print(imgPath)

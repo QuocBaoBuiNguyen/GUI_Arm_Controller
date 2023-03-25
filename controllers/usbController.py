@@ -52,7 +52,7 @@ class UsbController(object):
         finally:
             self.serial.close()
 
-    def makeFrame(self, frameCmd, framdOpt, frameData):
+    def makeFrame(self, frameCmd, frameOpt, frameData):
         # Init
         frame = []
         datas = [arrayFloat() for i in range(0, 3)]
@@ -60,7 +60,7 @@ class UsbController(object):
         # Config frame
         frame.insert(0, 0x02)
         frame[1:1] = [ord(c) for c in frameCmd]
-        frame[5:5] = framdOpt
+        frame[5:5] = [ord(c) for c in frameOpt]
         # print(frameData)
         # print(len(frameData))
         for i in range(0, len(frameData)):
