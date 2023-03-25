@@ -95,3 +95,14 @@ class Controller(object):
             print(hex(i))
         # print("frame", ( )
         self._usbCtrl.sendUsb(bytearray(frame))
+
+    def movePos_Auto(self, object_labels):
+        x = 0
+        y = 0
+        z = 0
+        frame = self._usbCtrl.makeFrame("GPOS", [0, 0, 0], [x, y, z])
+        # print("move to posistion", x, y, z)
+        for i in frame:
+            print(hex(i))
+        # print("frame", ( )
+        self._usbCtrl.sendUsb(bytearray(frame))

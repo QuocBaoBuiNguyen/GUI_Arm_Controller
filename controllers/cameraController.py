@@ -105,7 +105,7 @@ class live_stream(QThread):
         # model = torch.hub.load('ultralytics/yolov5', 'custom',
         #                        path='E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model\YOLOv5_DrinksLogos_Segment')
         model = torch.hub.load('ultralytics/yolov5', 'custom',
-                               path='E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model\YOLOv5_DrinksLogosDetection')
+                               path='E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model\YOLOv5_DrinksLogos_V2')
         return model
 
     def score_frame(self, frame):
@@ -174,12 +174,16 @@ class live_stream(QThread):
                             radius = 2
                             #center = (int(x1 + (x2 - x1) // 2), int(y1 + (y2 - y1) // 2))
                             center = (int(box[3][0] + (box[1][0] - box[3][0]) // 2), int(box[3][1] + (box[1][1] - box[3][1]) // 2))
-                            print(self.class_to_label(labels[i]), center)
+                            #print(self.class_to_label(labels[i]), center)
+                            object_label = self.class_to_label(labels[i])
                             cv2.circle(frame, center, radius, (250, 0, 0), 2)
                             cv2.putText(frame, str(center[0]) + " " + str(center[1]), center,
                                         cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
-
+            else:
+                object_label = "No object"
+                center = [0, 0]
         print("end loop")
+
         """
         Takes a frame and its results as input, and plots the bounding boxes and label on to the frame.
         :param results: contains labels and coordinates predicted by model on the given frame.
@@ -205,7 +209,7 @@ class live_stream(QThread):
         #         cv2.circle(frame, center, radius, bgr, 2)
         #         cv2.putText(frame, self.class_to_label(labels[i]) + " " + str(round(row[4], 2)), (x1, y1),
         #                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
-        return frame
+        return frame, object_label, center
 
     def run_program(self):
         """
@@ -221,12 +225,16 @@ class live_stream(QThread):
         out = cv2.VideoWriter(self.out_file, four_cc, 20, (x_shape, y_shape))
 
         while True:
+            from controllers.mainCtrl import Controller
             os.chdir('E:\HCMUT\FinalProject\GUI\GUI_Arm_Controller\model')
             start_time = time()
             ret, frame = self.player.read()
             assert ret
             results = self.score_frame(frame)
-            frame = self.plot_boxes(results, frame)
+            frame, objectLabel, center = self.plot_boxes(results, frame)
+            if (center == [300, 300]) and (objectLabel != "No object"):
+                self.Controller.movePos_Auto(self, objectLabel)
+            print("object is " + objectLabel, center)
             cv2.imwrite('result.jpg', frame)
             end_time = time()
             fps = 1 / (np.round(end_time - start_time, 3))
