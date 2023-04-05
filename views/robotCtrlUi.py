@@ -13,8 +13,8 @@ import time
 class robotCtrlUi():
     def __init__(self, resource):
 
+        self.MAX_BYTE_DISPLAY = 500
         self._uiResource = resource
-
         self._uiResource.graphicsView.setBackground('w')
         
         # Add Title
@@ -27,10 +27,10 @@ class robotCtrlUi():
         self._uiResource.graphicsView.addLegend()
         
         self._uiResource.graphicsView.plotItem.setMouseEnabled(x=False, y=False)
-        self.time = list(range(100))  # 100 time points
-        self.motor1 = [random.randint(0, 65000) for _ in range(100)]  # 100 data points
-        self.motor2 = [random.randint(0, 65000) for _ in range(100)]  # 100 data points
-        self.motor3 = [random.randint(0, 65000) for _ in range(100)]  # 100 data points
+        self.time = list(range(self.MAX_BYTE_DISPLAY))  # 100 time points
+        self.motor1 = [32768 for _ in range(self.MAX_BYTE_DISPLAY)]  # 100 data points
+        self.motor2 = [32768 for _ in range(self.MAX_BYTE_DISPLAY)]  # 100 data points
+        self.motor3 = [32768 for _ in range(self.MAX_BYTE_DISPLAY)]  # 100 data points
 
         pen = pg.mkPen(color=(255, 0, 0))
         self._uiResource.graphicsView.showGrid(x=True, y=True)
@@ -59,13 +59,13 @@ class robotCtrlUi():
         print(len(self.motor2))
         print(len(self.motor3))
 
-        if len(self.motor1) == 100:
+        if len(self.motor1) == self.MAX_BYTE_DISPLAY:
             self.motor1 = self.motor1[1:]  # Remove the first
 
-        if len(self.motor2) == 100:
+        if len(self.motor2) == self.MAX_BYTE_DISPLAY:
             self.motor2 = self.motor2[1:]  # Remove the first
 
-        if len(self.motor3) == 100:
+        if len(self.motor3) == self.MAX_BYTE_DISPLAY:
             self.motor3 = self.motor3[1:]  # Remove the first
 
         self.motor1.append(int(value[0][0]))
@@ -120,7 +120,7 @@ class robotCtrlUi():
         #
         # self.DATA_POINTS_TO_DISPLAY = 200
         # self.FREQUENCY = 2.5
-        # self.SCROLLING_TIMESTAMP_PLOT_REFRESH_RATE = self.FREQUENCY * 1000
+        # self.SCROLLING_TIMESTAMP_PLOT_REFRESH_RATE = self.FREQUENCY * self.MAX_BYTE_DISPLAY
         #
         # self.motorArr1 = deque(maxlen=self.DATA_POINTS_TO_DISPLAY)
         # self.motorArr2 = deque(maxlen=self.DATA_POINTS_TO_DISPLAY)

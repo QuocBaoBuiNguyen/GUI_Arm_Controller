@@ -74,6 +74,25 @@ class UsbController(object):
         frame.insert(21, 0x03)
         return frame
 
+    def makeFrameTest(self, frameCmd, frameOpt, frameData):
+        # Init
+        frame = []
+        datas = []
+
+        # Config frame
+        frame.insert(0, 0x02)
+        frame[1:1] = [ord(c) for c in frameCmd]
+        # frame[5:5] = [ord(c) for c in frameOpt]
+        frame[5:5] = frameOpt
+        # print(frameData)
+        # print(len(frameData))
+        for i in range(0, 8):
+            frame.append(0)
+
+        frame.insert(16, 0x16)
+        frame.insert(17, 0x03)
+        return frame
+
     def parseFrame(self, frame):
         datas = [arrayFloat() for i in range(0, 3)]
         # Parse frame
